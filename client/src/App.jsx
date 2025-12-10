@@ -1,33 +1,26 @@
-<<<<<<< HEAD
-import './App.css'
-import { BrowserRouter as Router, Routes, Route,  } from "react-router-dom";
-import Login from './components/Login/Login'
-import Register from './components/Register';
-import HomePage from './components/HomePage';
-import ForgotPassword from './components/ForgotPassword';
-=======
-import './App.css';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-
-// שינוי קריטי: הוספת שם התיקייה + שם הקובץ + הסיומת .jsx
-import Login from './components/Login/Login.jsx'; 
-import Register from './components/Register/Register.jsx';
-import HomePage from './components/HomePage/HomePage.jsx';
-import ForgotPassword from './components/ForgotPassword/ForgotPassword.jsx';
->>>>>>> 5bcb1cfe5f4ed2622d02232a6d1d8a362caaac23
+import './App.css';
+import Login from './components/Login/Login'; 
+import Register from './components/Register/Register';
+import HomePage from './components/HomePage/HomePage';
+import ChangePassword from './components/Password/ChangePassword';
+import ResetPassword from './components/Password/ResetPassword';
+import ForgotPassword from './components/Password/ForgotPassword';
 
 const App = () => {
   return (
-    <>
+    <div className="page-container">
       <Router>
         <Routes>
           <Route exact path='/' element={<Login/>}/>
           <Route exact path='/register' element={<Register/>}/>
           <Route exact path='/homePage' element={<HomePage/>}/>
           <Route exact path='/forgotPassword' element={<ForgotPassword/>}/>
+          <Route exact path='/changePassword' element={<ChangePassword/>}/>
+          <Route exact path='/resetPassword' element={<ResetPassword/>}/>
         </Routes> 
       </Router>
-    </>
+    </div>
   )
 }
 

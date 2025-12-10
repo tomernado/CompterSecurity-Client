@@ -1,27 +1,47 @@
-/* --- איפוס כללי כדי שהרקע יתפוס את כל המסך --- */
+/* איפוס */
 html, body, #root {
-  box-sizing: border-box;
-  display: flex;
-  min-width: 320px;
-  min-height: 100vh;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  width: 100vw;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   margin: 0;
   padding: 0;
-
+  width: 100%;
+  height: 100%;
 }
-
 
 .page-container {
-  display: flex;
-  justify-content: center; /* מרכוז לרוחב */
-  align-items: center;     /* מרכוז לגובה */
-  min-height: 100vh;       /* גובה מינימלי של מסך מלא */
   width: 100%;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); /* הגרדיאנט */
-  padding: 20px;           /* מרווח למובייל כדי שלא יידבק לקצוות */
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  /* --- כאן מוגדרת התמונה --- */
+  background-image: url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=2070&auto=format&fit=crop');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  
+  /* אופציונלי: שכבה כהה מעל התמונה כדי שהטקסט יהיה ברור */
+  background-color: rgba(0, 0, 0, 0.6); 
+  background-blend-mode: darken;
 }
 
+.card {
+  /* המספר האחרון (0.85) קובע את השקיפות:
+     1.0 = אטום לגמרי (לבן מלא)
+     0.0 = שקוף לגמרי (לא רואים כלום)
+     מומלץ להישאר בין 0.8 ל-0.95 כדי שהטקסט יהיה קריא.
+  */
+  background-color: rgba(255, 255, 255, 0.85); 
+
+  /* אפקט "זכוכית" (Glassmorphism) - מטשטש את מה שמאחורי הכרטיסייה */
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px); /* תמיכה לדפדפני ספארי */
+
+  /* שאר ההגדרות שלך */
+  padding: 2rem;
+  border-radius: 15px;
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37); /* צל מותאם לזכוכית */
+  width: 400px;
+  max-width: 90%;
+  text-align: center;
+  border: 1px solid rgba(255, 255, 255, 0.18); /* מסגרת עדינה */
+}
