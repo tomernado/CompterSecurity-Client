@@ -4,14 +4,16 @@ import Button from '@mui/material/Button';
 import SendIcon from '@mui/icons-material/Send';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useNavigate } from 'react-router-dom';
-import './Login.css';
 import './ForgotPassword.css';
+import MessangerBox from './Alerts/MessangerBox';
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 const ForgotPassword = () => {
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [emailError, setEmailError] = useState('');
+    const [allFieldsError, setAllFieldsError] = useState(false)
+     const [mailSent, setMailSent] = useState(false)
     
     const navigate = useNavigate();
 
@@ -19,7 +21,7 @@ const ForgotPassword = () => {
 
         if (!username || !email) 
         {
-            alert("Please fill in all fields");
+            setAllFieldsError(true);
             return;
         }
 
@@ -32,16 +34,14 @@ const ForgotPassword = () => {
 
        
         console.log("Sending reset link to:", email, "for user:", username);
+        setMailSent(true);
         
-    
-        alert(`A password reset link has been sent to ${email}`);
-        
-    
-        navigate('/');
     };
 
     return (
         <div >
+            <MessangerBox title={"Cannot restore password"} text={"Please fill all the fields"} isOpen={allFieldsError} setIsOpen={setAllFieldsError} />
+            <MessangerBox title={"reset password seccses"} text={"A password reset link has been sent to you}`"} isOpen={mailSent} setIsOpen={setMailSent} />
             <div className="page-container">
             <div className="card">
             <h1 className="forgot-title">Reset Password</h1>
@@ -61,8 +61,7 @@ const ForgotPassword = () => {
 
         
                 <TextField 
-                    label="Enter Email Address" variant="standard" 
-value={email}
+                    label="Enter Email Address" variant="standard" value={email}
                     onChange={(e) => {
                         const val = e.target.value;
                         setEmail(val);

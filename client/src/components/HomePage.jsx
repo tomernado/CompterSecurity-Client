@@ -1,4 +1,4 @@
-// src/compoments/HomePage.jsx
+
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation} from 'react-router-dom';
 import Button from '@mui/material/Button';
@@ -34,14 +34,19 @@ const HomePage = () => {
     const getData = () => {
         axios.get('http://localhost:3000/test')
         .then((response) => {
-            // handle success
-            console.log(response);
-            setData((response.data[0].userName))
+            console.log("Response from server:", response.data); // הדפסה לבדיקה
+            
+            // בדיקה: האם חזר מידע והאם המערך לא ריק?
+            if (response.data && response.data.length > 0) {
+                setData(response.data[0].userName);
+            } else {
+                setData("No users found in DB");
+            }
         })
         .catch((error) => {
-            // handle error
-            console.log(error);
-        })
+            console.error("Error fetching data:", error);
+            setData("Error connecting to server");
+        });
     }
 
 
