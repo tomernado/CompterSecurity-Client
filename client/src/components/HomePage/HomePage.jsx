@@ -12,16 +12,27 @@ import MatrixStream from '../Games/MatrixStream';
 
 const useStyles = makeStyles({
     pageContainer: { 
-        display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh', gap: '30px', padding: '20px' 
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        minHeight: '100vh',
+        gap: '30px',
+        padding: '20px' 
     },
 
     gamesColumn: { 
-        display: 'flex', flexDirection: 'column', gap: '20px' 
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '20px' 
     },
 
     centerProfile: {
-        backgroundColor: 'rgba(255, 255, 255, 0.75)', width: '400px', height: '490px', borderRadius: '25px',
-        boxShadow: '0 20px 60px rgba(0,0,0,0.9)', display: 'flex', flexDirection: 'column', 
+        backgroundColor: 'rgba(255, 255, 255, 0.75)',
+        width: '400px',
+        height: '490px',
+        borderRadius: '25px',
+        boxShadow: '0 20px 60px rgba(0,0,0,0.9)',
+        display: 'flex', flexDirection: 'column', 
         alignItems: 'center', justifyContent: 'center', textAlign: 'center', padding: '40px',
         
     },
@@ -43,7 +54,7 @@ const useStyles = makeStyles({
     }
 });
 
-export default function HomePage() {
+const HomePage = () => {
     const classes = useStyles();
     const navigate = useNavigate();
     const location = useLocation();
@@ -90,3 +101,5 @@ export default function HomePage() {
         </div>
     );
 }
+
+export default HomePage;
