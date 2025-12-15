@@ -23,6 +23,16 @@ const useStyles = makeStyles({
     },
     buttonsContainer: {
         display: 'flex', flexDirection: 'column', gap: '10px', width: '85%',
+    },
+    divider: {
+        margin: '10px 0',
+        borderBottom: '1px solid #eee',
+        width: '100%'
+    },
+    newMemberText: {
+        textAlign: 'center',
+        fontSize: '0.9rem',
+        color: '#5e5e5fff'
     }
 });
 
@@ -87,9 +97,9 @@ const Login = () => {
                        Forgot my password
                     </Button>
                     
-                    <div style={{ margin: '10px 0', borderBottom: '1px solid #eee' }}></div>
+                    <div className={classes.divider}> </div>
                     
-                    <span style={{textAlign: 'center', fontSize: '0.9rem', color: '#5e5e5fff'}}>
+                    <span className={classes.newMemberText}>
                        New member?
                     </span>
                     

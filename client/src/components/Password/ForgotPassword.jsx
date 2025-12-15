@@ -78,8 +78,8 @@ const ForgotPassword = () => {
 
     return (
         <div>
-            <MessangerBox title={"Cannot restore password"} text={"Please fill all the fields"} isOpen={allFieldsError} setIsOpen={setAllFieldsError}/>
-            <MessangerBox title={"Reset password success"} text={"A password reset link has been sent to you."} isOpen={mailSent} setIsOpen={setMailSent}/>
+            <MessangerBox title={"Cannot restore password"} text={"Please fill all the fields"} isOpen={allFieldsError} setIsOpen={setAllFieldsError} type="error"/>
+            <MessangerBox title={"Reset password success"} text={"A password reset link has been sent to you."} isOpen={mailSent} setIsOpen={setMailSent} type="success"/>
            
             <div className={classes.card}>
               

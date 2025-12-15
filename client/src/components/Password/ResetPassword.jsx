@@ -88,11 +88,15 @@ const ResetPassword = () => {
 
     return (
         <>
-            <MessangerBox title={"Error"} text={errorMsg} isOpen={isErrorOpen} setIsOpen={setIsErrorOpen}/>
-            <MessangerBox title={"Success"} text={"Password has been reset! Redirecting..."} isOpen={isSuccessOpen} setIsOpen={setIsSuccessOpen}/>
+            <MessangerBox title={"Error"} text={errorMsg} isOpen={isErrorOpen} setIsOpen={setIsErrorOpen} type="error"/>
+            <MessangerBox title={"Success"} text={"Password has been reset! Redirecting..."} isOpen={isSuccessOpen} setIsOpen={setIsSuccessOpen} type="success"/>
 
             <div className={classes.card}>
-                <div className={classes.title}>Set New Password</div>
+
+                <div className={classes.title}>
+                    Set New Password
+                </div>
+                
                 <div className={classes.subtitle}>
                     Please create a new strong password
                 </div>
