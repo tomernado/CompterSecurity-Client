@@ -5,10 +5,15 @@ import SpeedIcon from '@mui/icons-material/Speed';
 
 const useStyles = makeStyles({
     gameCard: {
-        width: '250px', height: '250px', // גודל קבוע לכולם
+        width: '250px',
+        height: '250px', // גודל קבוע לכולם
         borderRadius: '20px',
-        display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
-        textAlign: 'center', cursor: 'pointer',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        textAlign: 'center',
+        cursor: 'pointer',
         transition: 'all 0.3s ease',
         boxShadow: '0 10px 30px rgba(0,0,0,0.5)',
         border: '1px solid rgba(255,255,255,0.1)',
@@ -17,7 +22,9 @@ const useStyles = makeStyles({
         overflow: 'hidden'
     },
     scoreText: {
-        fontSize: '2rem', fontWeight: 'bold', textShadow: '0 0 10px rgba(255,255,255,0.5)'
+        fontSize: '2rem',
+        fontWeight: 'bold',
+        textShadow: '0 0 10px rgba(255,255,255,0.5)'
     }
 });
 

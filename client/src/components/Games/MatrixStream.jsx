@@ -5,10 +5,14 @@ import CodeIcon from '@mui/icons-material/Code';
 
 const useStyles = makeStyles({
     gameCard: {
-        width: '250px', height: '250px',
+        width: '250px',
+        height: '250px',
         borderRadius: '20px',
         backgroundColor: 'black',
-        display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
         color: '#00e676', // ירוק מטריקס
         border: '1px solid #00e676',
         boxShadow: '0 0 15px rgba(0, 230, 118, 0.2)',
@@ -16,7 +20,11 @@ const useStyles = makeStyles({
         fontFamily: 'monospace'
     },
     streamBox: {
-        fontSize: '1.2rem', opacity: 0.8, lineHeight: '1.2rem', marginTop: 10, textAlign: 'center'
+        fontSize: '1.2rem',
+        opacity: 0.8,
+        lineHeight: '1.2rem',
+        marginTop: 10,
+        textAlign: 'center'
     }
 });
 

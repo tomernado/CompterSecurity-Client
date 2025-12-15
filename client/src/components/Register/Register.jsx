@@ -9,20 +9,36 @@ import MessangerBox from '../Alerts/MessangerBox';
 
 const useStyles = makeStyles({
     card: {
-        backgroundColor: 'rgba(255, 255, 255, 0.8)', padding: '55px', borderRadius: '15px',
-        boxShadow: '0 10px 25px rgba(0,0,0,0.2)',
-        width: '100%', maxWidth: '400px',
-        display: 'flex', flexDirection: 'column', alignItems: 'center',
+        backgroundColor: 'rgba(255, 255, 255, 0.8)',
+        padding: '55px',
+        borderRadius: '15px',
+        boxShadow: '0 10px 25px rgba(0,0,0,0.8)',
+        width: '100%',
+        maxWidth: '400px',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center'
     },
     welcomingLabel: {
-        fontSize: '1.8rem', color: '#08155a', fontWeight: 'bold',
-        marginBottom: '20px', textAlign: 'center', fontFamily: "'Poppins', sans-serif",
+        fontSize: '1.8rem',
+        color: '#08155a',
+        fontWeight: 'bold',
+        marginBottom: '20px',
+        textAlign: 'center',
+        fontFamily: "'Poppins', sans-serif"
     },
     formContainer: {
-        display: 'flex', flexDirection: 'column', gap: '15px', width: '100%', marginBottom: '20px',
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '15px',
+        width: '100%',
+        marginBottom: '20px'
     },
     buttonsContainer: {
-        display: 'flex', flexDirection: 'column', gap: '10px', width: '85%',
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '10px',
+        width: '85%'
     }
 });
 
@@ -98,7 +114,7 @@ const Register = () => {
 
     return (
         <div> 
-            <MessangerBox  title={msgTitle} text={msgText} isOpen={isMsgOpen} setIsOpen={handleCloseMsg}/>
+            <MessangerBox  title={msgTitle} text={msgText} isOpen={isMsgOpen} setIsOpen={handleCloseMsg} type={isSuccess ? "success" : "error"}/>
 
             <div className={classes.card}>
 

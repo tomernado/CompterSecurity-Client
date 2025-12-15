@@ -8,25 +8,43 @@ import { makeStyles } from '@mui/styles';
 import MessangerBox from '../Alerts/MessangerBox';
 
 const useStyles = makeStyles({
-   
     card: {
-        backgroundColor: 'rgba(255, 255, 255, 0.8)', padding: '55px', borderRadius: '15px',
-        boxShadow: '0 10px 25px rgba(0,0,0,0.2)',
-        width: '100%', maxWidth: '400px',
-        display: 'flex', flexDirection: 'column', alignItems: 'center', 
+        backgroundColor: 'rgba(255, 255, 255, 0.8)',
+        padding: '55px',
+        borderRadius: '15px',
+        boxShadow: '0 10px 25px rgba(0,0,0,0.8)',
+        width: '100%',
+        maxWidth: '400px',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center'
     },
     title: {
-        fontSize: '1.8rem', color: '#08155a', fontWeight: 'bold',
-        marginBottom: '10px', textAlign: 'center', fontFamily: "'Poppins', sans-serif",
+        fontSize: '1.8rem',
+        color: '#08155a',
+        fontWeight: 'bold',
+        marginBottom: '10px',
+        textAlign: 'center',
+        fontFamily: "'Poppins', sans-serif"
     },
     subtitle: {
-        fontSize: '0.95rem', color: '#08155a', marginBottom: '20px', textAlign: 'center'
+        fontSize: '0.95rem',
+        color: '#08155a',
+        marginBottom: '20px',
+        textAlign: 'center'
     },
     formContainer: {
-        display: 'flex', flexDirection: 'column', gap: '15px', width: '90%', marginBottom: '35px',
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '15px',
+        width: '90%',
+        marginBottom: '35px'
     },
     buttonsContainer: {
-        display: 'flex', flexDirection: 'column', gap: '10px', width: '70%',
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '10px',
+        width: '70%'
     }
 });
 

@@ -9,11 +9,10 @@ import VpnKeyIcon from '@mui/icons-material/VpnKey';
 import MessangerBox from '../Alerts/MessangerBox'; 
 
 const useStyles = makeStyles({
+    
     card: {
-        backgroundColor: 'rgba(255, 255, 255, 0.8)', padding: '55px', borderRadius: '15px',
-        boxShadow: '0 10px 25px rgba(0,0,0,0.6)',
-        width: '100%', maxWidth: '400px',
-        display: 'flex', flexDirection: 'column', alignItems: 'center',
+        backgroundColor: 'rgba(255, 255, 255, 0.8)', padding: '55px', borderRadius: '15px', boxShadow: '0 10px 25px rgba(0,0,0,0.8)',
+        width: '100%', maxWidth: '400px', display: 'flex', flexDirection: 'column', alignItems: 'center',
     },
     welcomingLabel: {
         fontSize: '1.8rem', color: '#08155a', fontWeight: 'bold',
@@ -64,7 +63,7 @@ const Login = () => {
 
     return (
         <div>
-            <MessangerBox  title={msgTitle} text={msgText} isOpen={isMsgOpen} setIsOpen={setIsMsgOpen}/>
+            <MessangerBox  title={msgTitle} text={msgText} isOpen={isMsgOpen} setIsOpen={setIsMsgOpen} type="error"/>
 
             <div className={classes.card}>
                 

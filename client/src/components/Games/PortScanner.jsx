@@ -5,13 +5,17 @@ import RouterIcon from '@mui/icons-material/Router';
 
 const useStyles = makeStyles({
     gameCard: {
-        width: '250px', height: '250px',
+        width: '250px',
+        height: '250px',
         borderRadius: '20px',
         backgroundColor: 'rgba(10, 25, 41, 0.9)', // כחול כהה מאוד
-        display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
         color: 'white',
         border: '1px solid rgba(255,255,255,0.1)',
-        boxShadow: '0 10px 30px rgba(0,0,0,0.5)',
+        boxShadow: '0 10px 30px rgba(0,0,0,0.5)'
     },
     portBtn: {
         background: 'transparent',
@@ -22,9 +26,15 @@ const useStyles = makeStyles({
         cursor: 'pointer',
         fontFamily: 'monospace',
         transition: '0.2s',
-        '&:hover': { background: 'rgba(255,255,255,0.1)' }
+        '&:hover': {
+            background: 'rgba(255,255,255,0.1)'
+        }
     },
-    grid: { display: 'flex', gap: '10px', marginTop: '20px' }
+    grid: {
+        display: 'flex',
+        gap: '10px',
+        marginTop: '20px'
+    }
 });
 
 export default function PortScanner() {

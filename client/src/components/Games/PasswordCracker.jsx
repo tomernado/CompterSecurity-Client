@@ -6,13 +6,17 @@ import Button from '@mui/material/Button';
 
 const useStyles = makeStyles({
     gameCard: {
-        width: '250px', height: '250px',
+        width: '250px',
+        height: '250px',
         borderRadius: '20px',
         backgroundColor: 'rgba(0,0,0,0.85)',
-        display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
         border: '1px solid #333',
         color: 'white',
-        boxShadow: '0 10px 30px rgba(0,0,0,0.5)',
+        boxShadow: '0 10px 30px rgba(0,0,0,0.5)'
     },
     input: {
         background: 'transparent',
@@ -28,7 +32,10 @@ const useStyles = makeStyles({
         fontFamily: 'monospace'
     },
     status: {
-        marginTop: 10, fontSize: '0.9rem', fontWeight: 'bold', letterSpacing: '1px'
+        marginTop: 10,
+        fontSize: '0.9rem',
+        fontWeight: 'bold',
+        letterSpacing: '1px'
     }
 });
 
