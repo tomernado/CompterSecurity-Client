@@ -33,7 +33,6 @@ const useStyles = makeStyles({
     }
 });
 
-// פונקציה שמציגה זמן יפה (למשל 14:59)
 const formatTime = (ms) => {
     if (ms <= 0) return "00:00";
     const totalSeconds = Math.floor(ms / 1000);
@@ -53,16 +52,15 @@ const Login = () => {
     const [msgText, setMsgText] = useState("");
     
     const [attemptsWarning, setAttemptsWarning] = useState(null);
-    const [lockoutTimer, setLockoutTimer] = useState(null); // הטיימר
+    const [lockoutTimer, setLockoutTimer] = useState(null); 
 
-    // מנגנון הטיימר שרץ כל שנייה
     useEffect(() => {
         if (lockoutTimer !== null) {
             const interval = setInterval(() => {
                 setLockoutTimer((prev) => {
                     if (prev <= 1000) {
                         clearInterval(interval);
-                        return null; // הזמן נגמר, מפסיקים את הטיימר
+                        return null; 
                     }
                     return prev - 1000;
                 });
@@ -73,7 +71,7 @@ const Login = () => {
 
     const handleLogin = async () => {
         setAttemptsWarning(null);
-        if (lockoutTimer) return; // לא נותן ללחוץ אם יש טיימר
+        if (lockoutTimer) return;
 
         if (!userName || !password) {
             setMsgTitle("Missing Information");
@@ -99,7 +97,6 @@ const Login = () => {
                 } 
                 else if (status === 403) {
                     setMsgTitle("Account Locked");
-                    // אם השרת שלח זמן - מפעילים טיימר
                     if (data.timeLeft) {
                         setLockoutTimer(data.timeLeft);
                         setMsgText(`Account locked. Wait ${formatTime(data.timeLeft)}`);
@@ -139,11 +136,7 @@ const Login = () => {
                 </div>
 
                 <div className={classes.buttonsContainer}>
-                    <Button 
-                        variant="contained" 
-                        startIcon={<VpnKeyIcon/>} 
-                        onClick={handleLogin}
-                        disabled={!!lockoutTimer} // מבטל את הכפתור בזמן נעילה
+                    <Button variant="contained" startIcon={<VpnKeyIcon/>} onClick={handleLogin} disabled={!!lockoutTimer}
                         style={lockoutTimer ? { backgroundColor: '#ccc' } : {}}
                     >
                         {lockoutTimer ? formatTime(lockoutTimer) : "Login"}
