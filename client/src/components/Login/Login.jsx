@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'; // 1. הוסף useEffect
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { makeStyles } from '@mui/styles';
@@ -10,26 +10,63 @@ import MessangerBox from '../Alerts/MessangerBox';
 
 const useStyles = makeStyles({
     card: {
-        backgroundColor: 'rgba(255, 255, 255, 0.8)', padding: '55px', borderRadius: '15px', boxShadow: '0 10px 25px rgba(0,0,0,0.8)',
-        width: '100%', maxWidth: '400px', display: 'flex', flexDirection: 'column', alignItems: 'center',
+        backgroundColor: 'rgba(255, 255, 255, 0.8)', 
+        padding: '55px', 
+        borderRadius: '15px', 
+        boxShadow: '0 10px 25px rgba(0,0,0,0.8)',
+        width: '100%', 
+        maxWidth: '400px', 
+        display: 'flex', 
+        flexDirection: 'column', 
+        alignItems: 'center',
     },
     welcomingLabel: {
-        fontSize: '1.8rem', color: '#08155a', fontWeight: 'bold', marginBottom: '20px', textAlign: 'center', fontFamily: "'Poppins', sans-serif",
+        fontSize: '1.8rem', 
+        color: '#08155a', 
+        fontWeight: 'bold', 
+        marginBottom: '20px', 
+        textAlign: 'center', 
+        fontFamily: "'Poppins', sans-serif",
     },
     formContainer: {
-        display: 'flex', flexDirection: 'column', gap: '15px', width: '100%', marginBottom: '30px',
+        display: 'flex', 
+        flexDirection: 'column', 
+        gap: '15px', 
+        width: '100%', 
+        marginBottom: '30px',
     },
     buttonsContainer: {
-        display: 'flex', flexDirection: 'column', gap: '10px', width: '85%',
+        display: 'flex', 
+        flexDirection: 'column', 
+        gap: '10px', 
+        width: '85%',
     },
     divider: {
-        margin: '10px 0', borderBottom: '1px solid #eee', width: '100%'
+        margin: '10px 0', 
+        borderBottom: '1px solid #eee', 
+        width: '100%'
     },
     newMemberText: {
-        textAlign: 'center', fontSize: '0.9rem', color: '#5e5e5fff'
+        textAlign: 'center', 
+        fontSize: '0.9rem', 
+        color: '#5e5e5fff'
     },
     warningText: {
-        color: '#d32f2f', fontSize: '0.85rem', textAlign: 'center', marginTop: '-10px', fontWeight: 'bold'
+        color: '#d32f2f', 
+        fontSize: '0.85rem', 
+        textAlign: 'center', 
+        marginTop: '-10px', 
+        fontWeight: 'bold'
+    },
+    timerText: {
+        color: 'red', 
+        fontWeight: 'bold', 
+        textAlign: 'center', 
+        marginTop: '10px'
+    },
+    disabledButton: {
+        backgroundColor: '#ccc !important',
+        color: '#666 !important'
     }
 });
 
@@ -112,6 +149,11 @@ const Login = () => {
         }
     };
 
+    const handleUserNameChange = (text) => {
+        setUserName(text)
+        setLockoutTimer(false)
+    }
+
     return (
         <div>
             <MessangerBox title={msgTitle} text={msgText} isOpen={isMsgOpen} setIsOpen={setIsMsgOpen} type="error"/>
@@ -122,22 +164,25 @@ const Login = () => {
                 </div>
 
                 <div className={classes.formContainer}>
-                    <TextField label="Username" variant="standard" value={userName} onChange={(e) => setUserName(e.target.value)} />
+                    <TextField label="Username" variant="standard" value={userName} onChange={(e) => handleUserNameChange(e.target.value)} />
                     <TextField label="Password" type="password" variant="standard" value={password} onChange={(e) => setPassword(e.target.value)} />
                     
                     {attemptsWarning && <div className={classes.warningText}>{attemptsWarning}</div>}
                     
-                    {/* תצוגת הטיימר */}
                     {lockoutTimer && (
-                        <div style={{ color: 'red', fontWeight: 'bold', textAlign: 'center', marginTop: '10px' }}>
+                        <div className={classes.timerText}>
                             Locked. Try again in: {formatTime(lockoutTimer)}
                         </div>
                     )}
                 </div>
 
                 <div className={classes.buttonsContainer}>
-                    <Button variant="contained" startIcon={<VpnKeyIcon/>} onClick={handleLogin} disabled={!!lockoutTimer}
-                        style={lockoutTimer ? { backgroundColor: '#ccc' } : {}}
+                    <Button 
+                        variant="contained" 
+                        startIcon={<VpnKeyIcon/>} 
+                        onClick={handleLogin} 
+                        disabled={!!lockoutTimer}
+                        className={lockoutTimer ? classes.disabledButton : ''}
                     >
                         {lockoutTimer ? formatTime(lockoutTimer) : "Login"}
                     </Button>
