@@ -4,6 +4,7 @@ import Button from '@mui/material/Button';
 import LockResetIcon from '@mui/icons-material/LockReset';
 import { useNavigate } from 'react-router-dom';
 import { makeStyles } from '@mui/styles';
+import axios from 'axios'; // הוספת axios
 import MessangerBox from '../Alerts/MessangerBox';
 
 const useStyles = makeStyles({
@@ -23,12 +24,14 @@ const useStyles = makeStyles({
         color: '#08155a',
         fontWeight: 'bold',
         marginBottom: '10px',
+        textAlign: 'center',
         fontFamily: "'Poppins', sans-serif"
     },
     subtitle: {
         fontSize: '0.95rem',
         color: '#08155a',
-        marginBottom: '20px'
+        marginBottom: '20px',
+        textAlign: 'center'
     },
     formContainer: {
         display: 'flex',
@@ -51,6 +54,7 @@ const ResetPassword = () => {
     const classes = useStyles();
     const navigate = useNavigate();
 
+    const [token, setToken] = useState('');
     const [newPassword, setNewPassword] = useState('');
     const [verifyPassword, setVerifyPassword] = useState('');
 
@@ -58,9 +62,9 @@ const ResetPassword = () => {
     const [isErrorOpen, setIsErrorOpen] = useState(false);
     const [isSuccessOpen, setIsSuccessOpen] = useState(false);
 
-    const handleResetSubmit = () => {
-        if (!newPassword || !verifyPassword) {
-            setErrorMsg("Please fill all fields");
+    const handleResetSubmit = async () => {
+        if (!token || !newPassword || !verifyPassword) {
+            setErrorMsg("Please fill all fields (including the code from email)");
             setIsErrorOpen(true);
             return;
         }
@@ -72,46 +76,66 @@ const ResetPassword = () => {
         }
 
         if (!passwordRegex.test(newPassword)) {
-            setErrorMsg("Password must be at least 10 chars, include Uppercase, Lowercase, Number & Special char.");
+            setErrorMsg("Password too weak (10+ chars, Uppercase, Lowercase, Number & Special)");
             setIsErrorOpen(true);
             return;
         }
 
-        console.log("Resetting password...");
-        setIsSuccessOpen(true);
-        
-        // אחרי שהמשתמש רואה את ההצלחה, נעביר אותו ללוגין
-        setTimeout(() => {
-            navigate('/');
-        }, 2000);
+        try {
+            await axios.post('http://localhost:3000/reset-password', {
+                token: token,
+                newPassword: newPassword
+            });
+
+            setIsSuccessOpen(true);
+            
+            setTimeout(() => {
+                navigate('/');
+            }, 3000);
+
+        } catch (error) {
+            console.error("Reset failed:", error);
+            const msg = error.response?.data?.message || "Reset failed. Code might be invalid or expired.";
+            setErrorMsg(msg);
+            setIsErrorOpen(true);
+        }
     };
 
     return (
         <>
             <MessangerBox title={"Error"} text={errorMsg} isOpen={isErrorOpen} setIsOpen={setIsErrorOpen} type="error"/>
-            <MessangerBox title={"Success"} text={"Password has been reset! Redirecting..."} isOpen={isSuccessOpen} setIsOpen={setIsSuccessOpen} type="success"/>
+            <MessangerBox title={"Success"} text={"Password has been reset! Redirecting to login..."} isOpen={isSuccessOpen} setIsOpen={setIsSuccessOpen} type="success"/>
 
             <div className={classes.card}>
-
-                <div className={classes.title}>
-                    Set New Password
-                </div>
-                
-                <div className={classes.subtitle}>
-                    Please create a new strong password
-                </div>
+                <div className={classes.title}>Set New Password</div>
+                <div className={classes.subtitle}>Enter the code you received via email</div>
 
                 <div className={classes.formContainer}>
+                    <TextField 
+                        label="Reset Code (Token)" 
+                        variant="standard" 
+                        value={token} 
+                        onChange={(e) => setToken(e.target.value)}
+                    />
 
-                    <TextField  label="New Password" type="password" variant="standard" 
-                        value={newPassword} onChange={(e) => setNewPassword(e.target.value)}/>
+                    <TextField  
+                        label="New Password" 
+                        type="password" 
+                        variant="standard" 
+                        value={newPassword} 
+                        onChange={(e) => setNewPassword(e.target.value)}
+                    />
 
-                   <TextField  label="Verify New Password" type="password" variant="standard"  
-                        value={verifyPassword} onChange={(e) => setVerifyPassword(e.target.value)}/>
+                    <TextField  
+                        label="Verify New Password" 
+                        type="password" 
+                        variant="standard"  
+                        value={verifyPassword} 
+                        onChange={(e) => setVerifyPassword(e.target.value)}
+                    />
                 </div>
 
                 <div className={classes.buttonsContainer}>
-
                     <Button variant="contained" endIcon={<LockResetIcon />} onClick={handleResetSubmit}>
                         Reset Password
                     </Button>

@@ -5,6 +5,7 @@ import SendIcon from '@mui/icons-material/Send';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useNavigate } from 'react-router-dom';
 import { makeStyles } from '@mui/styles';
+import axios from 'axios'; // הוספת axios
 import MessangerBox from '../Alerts/MessangerBox';
 
 const useStyles = makeStyles({
@@ -54,16 +55,20 @@ const ForgotPassword = () => {
     const classes = useStyles();
     const navigate = useNavigate();
 
-    const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [emailError, setEmailError] = useState('');
     
-    const [allFieldsError, setAllFieldsError] = useState(false);
-    const [mailSent, setMailSent] = useState(false);
+    const [msgOpen, setMsgOpen] = useState(false);
+    const [msgTitle, setMsgTitle] = useState("");
+    const [msgText, setMsgText] = useState("");
+    const [msgType, setMsgType] = useState("error");
 
-    const handleReset = () => {
-        if (!username || !email) {
-            setAllFieldsError(true);
+    const handleReset = async () => {
+        if (!email) {
+            setMsgTitle("Missing Information");
+            setMsgText("Please enter your email address");
+            setMsgType("error");
+            setMsgOpen(true);
             return;
         }
 
@@ -72,47 +77,53 @@ const ForgotPassword = () => {
             return;
         }
 
-        console.log("Sending reset link to:", email, "for user:", username);
-        setMailSent(true);
+        try {
+            await axios.post('http://localhost:3000/forgot-password', { email }); 
+            setMsgTitle("Email Sent");
+            setMsgText("If this email exists, a reset code has been sent to it.");
+            setMsgType("success");
+            setMsgOpen(true);
+            
+            setTimeout(() => {
+                navigate('/resetPassword');
+            }, 3000);
+
+        } catch (error) {
+            console.error(error);
+            setMsgTitle("Error");
+            setMsgText("Failed to send request. Server might be down.");
+            setMsgType("error");
+            setMsgOpen(true);
+        }
     };
 
     return (
         <div>
-            <MessangerBox title={"Cannot restore password"} text={"Please fill all the fields"} isOpen={allFieldsError} setIsOpen={setAllFieldsError} type="error"/>
-            <MessangerBox title={"Reset password success"} text={"A password reset link has been sent to you."} isOpen={mailSent} setIsOpen={setMailSent} type="success"/>
+            <MessangerBox title={msgTitle} text={msgText} isOpen={msgOpen} setIsOpen={setMsgOpen} type={msgType}/>
            
             <div className={classes.card}>
-              
-                <div className={classes.title}>
-                    Reset Password
-                </div>
-                <div className={classes.subtitle}>
-                    Enter your details to receive a reset link
-                </div>
+                <div className={classes.title}>Reset Password</div>
+                <div className={classes.subtitle}>Enter your email to receive a reset code</div>
 
                 <div className={classes.formContainer}>
-
-                    <TextField label="Enter Username" variant="standard" value={username}
-                        onChange={(e) => setUsername(e.target.value)}/>
-
-                    <TextField  label="Enter Email Address" variant="standard" value={email} error={!!emailError} helperText={emailError}
-                        onChange={(e) => { const val = e.target.value;
-                        setEmail(val);
-                            if (val !== '' && !emailRegex.test(val)) {
-                                setEmailError("Invalid Email Format");
-                            } 
-                            else {
-                                setEmailError("");
-                            }
-                        }}/>
+                    <TextField  
+                        label="Enter Email Address" 
+                        variant="standard" 
+                        value={email} 
+                        error={!!emailError} 
+                        helperText={emailError}
+                        onChange={(e) => { 
+                            const val = e.target.value;
+                            setEmail(val);
+                            setEmailError(val !== '' && !emailRegex.test(val) ? "Invalid Email Format" : "");
+                        }}
+                    />
                 </div>
 
                 <div className={classes.buttonsContainer}>
-
                     <Button variant="contained" endIcon={<SendIcon />} onClick={handleReset}>
-                        Send Reset code Link
+                        Send Reset Code
                     </Button>
-
                     <Button variant="text" startIcon={<ArrowBackIcon />} onClick={() => navigate('/')}>
                         Back to Login
                     </Button>
