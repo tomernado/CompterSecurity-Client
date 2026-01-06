@@ -102,10 +102,13 @@ const ChangePassword = () => {
 
         try {
             const response = await axios.post('http://localhost:3000/change-password', {
-                username: username,
                 oldPassword: oldPassword,
                 newPassword: newPassword
-            });
+            },
+            { 
+            withCredentials: true 
+            }
+        );
 
             if (response.status === 200) {
                 setIsSuccessOpen(true);

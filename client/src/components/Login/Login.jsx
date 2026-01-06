@@ -118,9 +118,13 @@ const Login = () => {
         }
 
         try {
-            await axios.post('http://localhost:3000/login', { username: userName, password: password });
+            await axios.post('http://localhost:3000/login', 
+                    { username: userName, password: password },
+                    { withCredentials: true } 
+                );
             navigate('/homePage', { state: { user: userName } });
-        } catch (error) {
+        } 
+        catch (error) {
             setMsgTitle("Login Failed");
             
             if (error.response) {
