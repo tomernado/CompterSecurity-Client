@@ -10,8 +10,8 @@ import TextField from '@mui/material/TextField';
 import { makeStyles } from '@mui/styles';
 import IconButton from '@mui/material/IconButton';
 import AddIcon from '@mui/icons-material/Add';
-import axios from 'axios';
 import { Close } from '@mui/icons-material';
+import { apiPost } from '../../utils/apiUtils';
 
 
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -73,10 +73,10 @@ const CreateCustomer = ({refreshCustomers, currentUser}) => {
     };
 
     const addCustomer = () => {
-        axios.post('http://localhost:3000/customers', {
+        apiPost('http://localhost:5000/customers', {
             customerName: customerName,
             customerPhone: customerPhone || null
-        }, { withCredentials: true })
+        }, currentUser)
         .then((response) => {
             if (response.status === 201 || response.data.message) {
                 handleClose();
@@ -101,7 +101,6 @@ const CreateCustomer = ({refreshCustomers, currentUser}) => {
             setCustomerName(e.target.value);
             break;
           case 'customerPhone':
-            // Allow only numbers
             const phoneValue = e.target.value.replace(/[^0-9]/g, '');
             setCustomerPhone(phoneValue);
             break;

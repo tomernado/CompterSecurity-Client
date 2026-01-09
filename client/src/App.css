@@ -9,6 +9,7 @@ html, body, #root {
   width: 100%;
   min-height: 100vh;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 
@@ -17,4 +18,11 @@ html, body, #root {
   background-position: center;
   background-color: rgba(0, 0, 0, 0.6); 
   background-blend-mode: darken;
+}
+
+.page-container > *:not(:first-child) {
+  display: flex;
+  margin-bottom: '5%';
+  align-items: center;
+  flex: 1;
 }

@@ -8,7 +8,7 @@ const useStyles = makeStyles({
         width: '250px',
         height: '250px',
         borderRadius: '20px',
-        backgroundColor: 'rgba(10, 25, 41, 0.9)', // כחול כהה מאוד
+        backgroundColor: 'rgba(10, 25, 41, 0.9)',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',

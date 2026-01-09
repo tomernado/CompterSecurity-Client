@@ -41,7 +41,7 @@ const useStyles = makeStyles({
 
 export default function PasswordCracker() {
     const classes = useStyles();
-    const [target] = useState(Math.floor(Math.random() * 10) + 1); // מספר בין 1-10
+    const [target] = useState(Math.floor(Math.random() * 10) + 1);
     const [guess, setGuess] = useState('');
     const [status, setStatus] = useState({ text: 'ENTER PIN (1-10)', color: '#aaa' });
 

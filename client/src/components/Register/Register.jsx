@@ -5,7 +5,8 @@ import { makeStyles } from '@mui/styles';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
-import MessangerBox from '../Alerts/MessangerBox';  
+import MessangerBox from '../Alerts/MessangerBox';
+import { getApiUrl } from '../../utils/apiUtils';  
 
 const useStyles = makeStyles({
     card: {
@@ -81,7 +82,7 @@ const Register = () => {
         }
 
         try {
-            await axios.post("http://localhost:3000/register", {
+            await axios.post(getApiUrl("/register"), {
                 username: userName,
                 email: mail,
                 password: password,

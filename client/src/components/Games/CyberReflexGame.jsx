@@ -6,7 +6,7 @@ import SpeedIcon from '@mui/icons-material/Speed';
 const useStyles = makeStyles({
     gameCard: {
         width: '250px',
-        height: '250px', // גודל קבוע לכולם
+        height: '250px',
         borderRadius: '20px',
         display: 'flex',
         flexDirection: 'column',
@@ -30,7 +30,7 @@ const useStyles = makeStyles({
 
 export default function CyberReflexGame() {
     const classes = useStyles();
-    const [state, setState] = useState('idle'); // idle, waiting, ready, result
+    const [state, setState] = useState('idle');
     const [bg, setBg] = useState('rgba(0,0,0,0.8)');
     const [text, setText] = useState('Click to Test Reflex');
     
@@ -40,13 +40,13 @@ export default function CyberReflexGame() {
     const handleClick = () => {
         if (state === 'idle' || state === 'result') {
             setState('waiting');
-            setBg('#b71c1c'); // אדום כהה
+                setBg('#b71c1c');
             setText('Wait for Green...');
             
             const randomTime = Math.random() * 2000 + 1000;
             timerRef.current = setTimeout(() => {
                 setState('ready');
-                setBg('#00e676'); // ירוק ניאון
+                setBg('#00e676');
                 setText('CLICK NOW!');
                 startRef.current = Date.now();
             }, randomTime);
@@ -54,13 +54,13 @@ export default function CyberReflexGame() {
         else if (state === 'waiting') {
             clearTimeout(timerRef.current);
             setState('result');
-            setBg('#ff1744'); // אדום בוהק (כישלון)
+            setBg('#ff1744');
             setText('Too Early!');
         } 
         else if (state === 'ready') {
             const time = Date.now() - startRef.current;
             setState('result');
-            setBg('#2979ff'); // כחול (הצלחה)
+            setBg('#2979ff');
             setText(`${time} ms`);
         }
     };

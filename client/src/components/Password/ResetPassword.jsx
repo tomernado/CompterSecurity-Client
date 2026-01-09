@@ -4,8 +4,9 @@ import Button from '@mui/material/Button';
 import LockResetIcon from '@mui/icons-material/LockReset';
 import { useNavigate } from 'react-router-dom';
 import { makeStyles } from '@mui/styles';
-import axios from 'axios'; // הוספת axios
+import axios from 'axios';
 import MessangerBox from '../Alerts/MessangerBox';
+import { getApiUrl } from '../../utils/apiUtils';
 
 const useStyles = makeStyles({
     card: {
@@ -82,7 +83,7 @@ const ResetPassword = () => {
         }
 
         try {
-            await axios.post('http://localhost:3000/reset-password', {
+            await axios.post(getApiUrl('/reset-password'), {
                 token: token,
                 newPassword: newPassword
             });
@@ -91,7 +92,7 @@ const ResetPassword = () => {
             
             setTimeout(() => {
                 navigate('/');
-            }, 3000);
+            }, 5000);
 
         } catch (error) {
             console.error("Reset failed:", error);

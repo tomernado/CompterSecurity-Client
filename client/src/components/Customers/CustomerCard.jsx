@@ -10,7 +10,7 @@ import PhoneIcon from '@mui/icons-material/Phone';
 import BusinessIcon from '@mui/icons-material/Business';
 import BadgeIcon from '@mui/icons-material/Badge';
 import IconButton from '@mui/material/IconButton';
-import axios from 'axios';
+import { apiDelete } from '../../utils/apiUtils';
 
 const useStyles = makeStyles({
     cardRoot: {
@@ -41,7 +41,7 @@ const CustomerCard = ({customerId, userName, customerName, customerPhone, refres
 });
     
 const handleDeleteCustomer = () => {
-    axios.delete(`http://localhost:3000/customers/${customerId}`)
+    apiDelete(`http://localhost:5000/customers/${customerId}`, userName)
         .then((response) => {
             if (response.data.returnCode === CUSTOMER_DELETE_CODE.DELETED) {
                 refreshCustomers();
@@ -80,7 +80,10 @@ const handleDeleteCustomer = () => {
                 <AccordionDetails>
                     <div className={classes.cardInfo}>
                         <div className={classes.userInfo}>
-
+                            <div>
+                                <BusinessIcon sx={{color: 'blue', marginRight: '10px'}}/>
+                                    user name: {userName || 'N/A'}
+                            </div>
                             <div>
                                 <BusinessIcon sx={{color: 'blue', marginRight: '10px'}}/>
                                     customer name: {customerName || 'N/A'}

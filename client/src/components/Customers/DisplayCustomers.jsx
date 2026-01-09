@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import axios from 'axios';
 import CustomerCard from './CustomerCard';
 import { useState } from 'react';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -11,6 +10,7 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import TextField from '@mui/material/TextField';
 import SearchIcon from '@mui/icons-material/Search';
 import InputAdornment from '@mui/material/InputAdornment';
+import { apiGet, apiPost } from '../../utils/apiUtils';
 
 const useStyles = makeStyles({
     root: {
@@ -75,7 +75,7 @@ const DisplayCustomers = () => {
 
 
 const setCustomersList = () => {
-    axios.get(`http://localhost:3000/customers`, { withCredentials: true })
+    apiGet('http://localhost:5000/customers', currentUser)
         .then(res => {
             const customersList = res.data.customers || [];
             setAllCustomers(customersList);
@@ -121,18 +121,15 @@ const handleSearch = (value) => {
     setSearchQuery(value);
     
     if (value.trim() === '') {
-        // If search is empty, restore all customers
         displayCustomersFromList(allCustomers);
         return;
     }
 
-    // Perform search
-    axios.post('http://localhost:3000/customers/search', 
+    apiPost('http://localhost:5000/customers/search', 
         { customerName: value },
-        { withCredentials: true }
+        currentUser
     )
     .then(res => {
-        // Handle response where customer is an array
         if (res.data.customer) {
             const customerArray = Array.isArray(res.data.customer) 
                 ? res.data.customer 

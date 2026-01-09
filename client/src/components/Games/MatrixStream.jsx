@@ -13,7 +13,7 @@ const useStyles = makeStyles({
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
-        color: '#00e676', // ירוק מטריקס
+        color: '#00e676',
         border: '1px solid #00e676',
         boxShadow: '0 0 15px rgba(0, 230, 118, 0.2)',
         overflow: 'hidden',
@@ -35,7 +35,7 @@ export default function MatrixStream() {
     useEffect(() => {
         const interval = setInterval(() => {
             const binary = Math.random().toString(2);
-            setLines(prev => [binary, ...prev].slice(0, 6)); // שומר רק 6 שורות
+            setLines(prev => [binary, ...prev].slice(0, 6));
         }, 150);
         return () => clearInterval(interval);
     }, []);

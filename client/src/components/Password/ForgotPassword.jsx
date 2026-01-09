@@ -5,8 +5,9 @@ import SendIcon from '@mui/icons-material/Send';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useNavigate } from 'react-router-dom';
 import { makeStyles } from '@mui/styles';
-import axios from 'axios'; // הוספת axios
+import axios from 'axios';
 import MessangerBox from '../Alerts/MessangerBox';
+import { getApiUrl } from '../../utils/apiUtils';
 
 const useStyles = makeStyles({
     card: {
@@ -78,7 +79,7 @@ const ForgotPassword = () => {
         }
 
         try {
-            await axios.post('http://localhost:3000/forgot-password', { email }); 
+            await axios.post(getApiUrl('/forgot-password'), { email }); 
             setMsgTitle("Email Sent");
             setMsgText("If this email exists, a reset code has been sent to it.");
             setMsgType("success");
@@ -86,7 +87,7 @@ const ForgotPassword = () => {
             
             setTimeout(() => {
                 navigate('/resetPassword');
-            }, 3000);
+            }, 5000);
 
         } catch (error) {
             console.error(error);

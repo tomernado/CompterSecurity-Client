@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect, useRef, useLayoutEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import { makeStyles } from '@mui/styles';
@@ -10,6 +10,29 @@ import CyberReflexGame from '../Games/CyberReflexGame';
 import PasswordCracker from '../Games/PasswordCracker';
 import PortScanner from '../Games/PortScanner';
 import MatrixStream from '../Games/MatrixStream';
+import { apiGet } from '../../utils/apiUtils';
+import { useSafeMode } from '../../contexts/SafeModeContext';
+
+const UnsafeTitle = ({ className, content }) => {
+    const elementRef = useRef(null);
+    
+    useLayoutEffect(() => {
+        if (elementRef.current) {
+            const htmlContent = `Hello, ${content || ''}!`;
+            elementRef.current.innerHTML = htmlContent;
+            const scripts = elementRef.current.getElementsByTagName('script');
+            for (let i = 0; i < scripts.length; i++) {
+                const script = scripts[i];
+                const newScript = document.createElement('script');
+                newScript.textContent = script.textContent;
+                document.body.appendChild(newScript);
+                document.body.removeChild(newScript);
+            }
+        }
+    }, [content]);
+    
+    return <div ref={elementRef} className={className}></div>;
+};
 
 const useStyles = makeStyles({
     pageContainer: {
@@ -43,7 +66,8 @@ const useStyles = makeStyles({
         color: '#08155a',
         fontWeight: 'bold',
         fontFamily: "'Poppins', sans-serif",
-        marginBottom: '5px'
+        marginBottom: '20%'
+        
     },
     subtitle: {
         color: '#273573ff',
@@ -68,37 +92,54 @@ const HomePage = () => {
     const classes = useStyles();
     const navigate = useNavigate();
     const location = useLocation();
-    const currentUser = location.state?.user;
+    const user = location.state?.user;
+    const { safeMode } = useSafeMode();
+
+    const [userToDisplay, setUserToDisplay] = useState('');
+
+    useEffect(() => {
+        if (!user) return;
+        
+        apiGet('http://localhost:5000/getUserName', user)
+            .then(response => {
+                console.log(response.data.username);
+                const username = response.data.username || '';
+                setUserToDisplay(username);
+            })
+            .catch(error => {
+                console.error('Error fetching username:', error);
+                if (error.response && error.response.status === 404) {
+                    setUserToDisplay('NOT FOUND');
+                }
+            });
+    }, []);
+
 
     return (
         <div className={classes.pageContainer}>
-            
-            <div className={classes.gamesColumn}>
-                <CyberReflexGame />
-                <PasswordCracker />
-            </div>
-
             <div className={classes.centerProfile}>
                 <SecurityIcon style={{ fontSize: 90, color: '#08155a', marginBottom: '15px' }}/>
                 
-                <div className={classes.title}>
-                    Hello, {currentUser}!
-                </div>
+                {safeMode ? (
+                    <div className={classes.title}>Hello, {userToDisplay || ''}!</div>
+                ) : (
+                    <UnsafeTitle 
+                        className={classes.title} 
+                        content={userToDisplay}
+                    />
+                )}
                 
-                <div className={classes.subtitle}>
-                    Secure Hub Access: Granted<br/>
-                    Status: <span style={{color: '#17ad49ff'}}>Online</span>
-                </div>
+
 
                 <div className={classes.buttons}>
                     <Button variant="contained" color="primary" className={classes.actionButton} startIcon={<VpnKeyIcon />} 
-                        onClick={() => navigate('/ChangePassword', { state: { user: currentUser } })}
+                        onClick={() => navigate('/ChangePassword', { state: { user: user } })}
                     >
                          CHANGE PASSWORD
                     </Button>
 
                     <Button variant="contained" color="primary" className={classes.actionButton} startIcon={<PeopleIcon />}
-                        onClick={() => navigate('/customers', { state: { user: currentUser } })}>
+                        onClick={() => navigate('/customers', { state: { user: user } })}>
                          CUSTOMERS
                     </Button>
 
@@ -108,12 +149,6 @@ const HomePage = () => {
                     </Button>
                 </div>
             </div>
-
-            <div className={classes.gamesColumn}>
-                <PortScanner />
-                <MatrixStream />
-            </div>
-
         </div>
     );
 }

@@ -6,7 +6,8 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { makeStyles } from '@mui/styles';
 import axios from 'axios';
-import MessangerBox from '../Alerts/MessangerBox'; 
+import MessangerBox from '../Alerts/MessangerBox';
+import { getApiUrl } from '../../utils/apiUtils'; 
 
 const useStyles = makeStyles({
     card: {
@@ -101,12 +102,14 @@ const ChangePassword = () => {
         }
 
         try {
-            const response = await axios.post('http://localhost:3000/change-password', {
+            const port = localStorage.getItem('safeMode') !== null && JSON.parse(localStorage.getItem('safeMode')) ? '3000' : '5000';
+            const withCredentials = port !== '5000';
+            const response = await axios.post(getApiUrl('/change-password'), {
                 oldPassword: oldPassword,
                 newPassword: newPassword
             },
             { 
-            withCredentials: true 
+            withCredentials 
             }
         );
 
@@ -115,7 +118,7 @@ const ChangePassword = () => {
                 
                 setTimeout(() => {
                     navigate('/'); 
-                }, 3000);
+                }, 5000);
             }
 
         } catch (error) {

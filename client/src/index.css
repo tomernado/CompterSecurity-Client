@@ -13,6 +13,5 @@ body {
   padding: 0;
   width: 100vw;
   height: 100vh;
-  /* שים לב: מחקתי מפה את ה-background: linear-gradient */
-  background-color: #000; /* רקע שחור פשוט למקרה שהתמונה לא נטענת */
+  background-color: #000;
 }

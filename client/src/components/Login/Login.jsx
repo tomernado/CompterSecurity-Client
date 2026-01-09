@@ -6,7 +6,8 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import VpnKeyIcon from '@mui/icons-material/VpnKey';
-import MessangerBox from '../Alerts/MessangerBox'; 
+import MessangerBox from '../Alerts/MessangerBox';
+import { getApiUrl } from '../../utils/apiUtils'; 
 
 const useStyles = makeStyles({
     card: {
@@ -118,9 +119,11 @@ const Login = () => {
         }
 
         try {
-            await axios.post('http://localhost:3000/login', 
+            const port = localStorage.getItem('safeMode') !== null && JSON.parse(localStorage.getItem('safeMode')) ? '3000' : '5000';
+            const withCredentials = port !== '5000';
+            await axios.post(getApiUrl('/login'), 
                     { username: userName, password: password },
-                    { withCredentials: true } 
+                    { withCredentials } 
                 );
             navigate('/homePage', { state: { user: userName } });
         } 
