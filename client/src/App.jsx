@@ -6,6 +6,7 @@ import HomePage from './components/HomePage/HomePage';
 import ChangePassword from './components/Password/ChangePassword';
 import ResetPassword from './components/Password/ResetPassword';
 import ForgotPassword from './components/Password/ForgotPassword';
+import DisplayCustomers from './components/Customers/DisplayCustomers';
 
 const App = () => {
   return (
@@ -15,6 +16,7 @@ const App = () => {
           <Route exact path='/' element={<Login/>}/>
           <Route exact path='/register' element={<Register/>}/>
           <Route exact path='/homePage' element={<HomePage/>}/>
+          <Route exact path='/customers' element={<DisplayCustomers/>}/>
           <Route exact path='/forgotPassword' element={<ForgotPassword/>}/>
           <Route exact path='/changePassword' element={<ChangePassword/>}/>
           <Route exact path='/resetPassword' element={<ResetPassword/>}/>

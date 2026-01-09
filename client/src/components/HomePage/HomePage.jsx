@@ -5,6 +5,7 @@ import { makeStyles } from '@mui/styles';
 import SecurityIcon from '@mui/icons-material/Security';
 import VpnKeyIcon from '@mui/icons-material/VpnKey';
 import LogoutIcon from '@mui/icons-material/Logout';
+import PeopleIcon from '@mui/icons-material/People';
 import CyberReflexGame from '../Games/CyberReflexGame'; 
 import PasswordCracker from '../Games/PasswordCracker';
 import PortScanner from '../Games/PortScanner';
@@ -27,7 +28,7 @@ const useStyles = makeStyles({
     centerProfile: {
         backgroundColor: 'rgba(255, 255, 255, 0.75)',
         width: '400px',
-        height: '490px',
+        minHeight: '560px',
         borderRadius: '25px',
         boxShadow: '0 20px 60px rgba(0,0,0,0.9)',
         display: 'flex',
@@ -94,6 +95,11 @@ const HomePage = () => {
                         onClick={() => navigate('/ChangePassword', { state: { user: currentUser } })}
                     >
                          CHANGE PASSWORD
+                    </Button>
+
+                    <Button variant="contained" color="primary" className={classes.actionButton} startIcon={<PeopleIcon />}
+                        onClick={() => navigate('/customers', { state: { user: currentUser } })}>
+                         CUSTOMERS
                     </Button>
 
                     <Button variant="contained" color="error" className={classes.actionButton} startIcon={<LogoutIcon />}
