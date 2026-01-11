@@ -13,27 +13,6 @@ import MatrixStream from '../Games/MatrixStream';
 import { apiGet } from '../../utils/apiUtils';
 import { useSafeMode } from '../../contexts/SafeModeContext';
 
-const UnsafeTitle = ({ className, content }) => {
-    const elementRef = useRef(null);
-    
-    useLayoutEffect(() => {
-        if (elementRef.current) {
-            const htmlContent = `Hello, ${content || ''}!`;
-            elementRef.current.innerHTML = htmlContent;
-            const scripts = elementRef.current.getElementsByTagName('script');
-            for (let i = 0; i < scripts.length; i++) {
-                const script = scripts[i];
-                const newScript = document.createElement('script');
-                newScript.textContent = script.textContent;
-                document.body.appendChild(newScript);
-                document.body.removeChild(newScript);
-            }
-        }
-    }, [content]);
-    
-    return <div ref={elementRef} className={className}></div>;
-};
-
 const useStyles = makeStyles({
     pageContainer: {
         display: 'flex',
@@ -98,18 +77,14 @@ const HomePage = () => {
     const [userToDisplay, setUserToDisplay] = useState('');
     const titleRef = useRef(null);
 
-    // XSS VULNERABILITY: Direct DOM manipulation with innerHTML - MAXIMUM VULNERABILITY
-    // Using useLayoutEffect to ensure DOM updates happen synchronously before browser paint
-    // This ensures any scripts/SVG onload events execute immediately
+    // use to show the unsafe mode title that enble XSS
     useLayoutEffect(() => {
         if (titleRef.current && !safeMode) {
             const htmlContent = `Hello, ${userToDisplay || ''}!`;
             
-            // Direct innerHTML assignment - no sanitization, no escaping
             titleRef.current.innerHTML = htmlContent;
             
-            // XSS VULNERABILITY: Manually execute scripts that innerHTML doesn't execute
-            // This is intentionally vulnerable - extracts and executes script tags manually
+
             const scripts = titleRef.current.getElementsByTagName('script');
             for (let i = 0; i < scripts.length; i++) {
                 const script = scripts[i];
@@ -119,7 +94,6 @@ const HomePage = () => {
                 document.body.removeChild(newScript);
             }
             
-            // Also trigger SVG onload manually if present
             const svgElements = titleRef.current.getElementsByTagName('svg');
             for (let i = 0; i < svgElements.length; i++) {
                 const svg = svgElements[i];
@@ -127,11 +101,8 @@ const HomePage = () => {
                     try {
                         svg.onload();
                     } catch (e) {
-                        // If onload is a string (like "alert('hi')"), eval it
                         const onloadStr = svg.getAttribute('onload');
                         if (onloadStr) {
-                            // XSS VULNERABILITY: Direct eval of user input - MAXIMUM VULNERABILITY
-                            // This allows any JavaScript in the onload attribute to execute
                             eval(onloadStr);
                         }
                     }
@@ -147,8 +118,6 @@ const HomePage = () => {
             .then(response => {
                 console.log(response.data.username);
                 
-                // XSS VULNERABILITY: Store username exactly as received, NO sanitization
-                // This is intentionally vulnerable for educational purposes
                 const username = response.data.username || '';
                 setUserToDisplay(username);
             })
@@ -168,8 +137,7 @@ const HomePage = () => {
                 {safeMode ? (
                     <div className={classes.title}>Hello, {userToDisplay || ''}!</div>
                 ) : (
-                    // XSS VULNERABILITY: Using ref with useLayoutEffect to set innerHTML directly
-                    // This bypasses React's rendering and inserts raw HTML - NO sanitization
+
                     <div 
                         className={classes.title}
                         ref={titleRef}
