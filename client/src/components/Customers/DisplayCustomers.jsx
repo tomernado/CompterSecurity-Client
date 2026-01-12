@@ -58,6 +58,12 @@ const useStyles = makeStyles({
         borderRadius: '4px',
         color: 'white',
     },
+    customers: {
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'flex-start',
+        width: '100%',
+    },
   });
 
 const DisplayCustomers = () => {
@@ -165,6 +171,7 @@ const handleSearch = (value) => {
                 startIcon={<ArrowBackIcon />}
                 onClick={() => navigate('/homePage', { state: { user: currentUser } })}
                 className={classes.backButton}
+                sx={{ marginTop: '20px' }}
             >
                 Back to Home
             </Button>
@@ -209,7 +216,9 @@ const handleSearch = (value) => {
                     }}
                 />
             </div>
-            {customers}
+            <div className={classes.customers}>
+                {customers}
+            </div>
         </div>
     )
 }

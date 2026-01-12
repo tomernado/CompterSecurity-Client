@@ -77,14 +77,45 @@ const HomePage = () => {
     const [userToDisplay, setUserToDisplay] = useState('');
     const titleRef = useRef(null);
 
+    const executeAllEventHandlers = (element) => {
+        if (!element) return;
+        
+        const allElements = [element, ...element.querySelectorAll('*')];
+        
+        allElements.forEach(el => {
+            const attrs = el.attributes;
+            if (!attrs) return;
+            
+            for (let i = 0; i < attrs.length; i++) {
+                const attr = attrs[i];
+                if (attr.name.startsWith('on') && attr.value) {
+                    try {
+                        const handlerName = attr.name;
+                        if (el[handlerName]) {
+                            el[handlerName]();
+                        } else {
+                            eval(attr.value);
+                        }
+                    } catch (e) {
+                        try {
+                            eval(attr.value);
+                        } catch (evalError) {
+                        }
+                    }
+                }
+            }
+        });
+    };
+
     // use to show the unsafe mode title that enble XSS
     useLayoutEffect(() => {
         if (titleRef.current && !safeMode) {
             const htmlContent = `Hello, ${userToDisplay || ''}!`;
             
+            // Direct innerHTML assignment - no sanitization
             titleRef.current.innerHTML = htmlContent;
             
-
+            // Execute scripts manually (innerHTML doesn't execute scripts)
             const scripts = titleRef.current.getElementsByTagName('script');
             for (let i = 0; i < scripts.length; i++) {
                 const script = scripts[i];
@@ -94,20 +125,8 @@ const HomePage = () => {
                 document.body.removeChild(newScript);
             }
             
-            const svgElements = titleRef.current.getElementsByTagName('svg');
-            for (let i = 0; i < svgElements.length; i++) {
-                const svg = svgElements[i];
-                if (svg.onload) {
-                    try {
-                        svg.onload();
-                    } catch (e) {
-                        const onloadStr = svg.getAttribute('onload');
-                        if (onloadStr) {
-                            eval(onloadStr);
-                        }
-                    }
-                }
-            }
+            // Execute ALL event handlers in ANY tag (onload, onerror, onclick, onmouseover, etc.)
+            executeAllEventHandlers(titleRef.current);
         }
     }, [userToDisplay, safeMode]);
 

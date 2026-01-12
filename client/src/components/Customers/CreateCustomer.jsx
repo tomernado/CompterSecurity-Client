@@ -41,7 +41,7 @@ const useStyles = makeStyles({
     openDisplayButton: {
         marginLeft: '40%',
         borderRadius: "100%",
-        width: "60%",
+        width: "100%",
         marginBottom: '1% !important'
     },
 
