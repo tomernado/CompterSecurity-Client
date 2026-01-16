@@ -107,6 +107,7 @@ const HomePage = () => {
         });
     };
 
+    // It was very hard to break the XSS code, we hope we did it well
     // use to show the unsafe mode title that enble XSS
     useLayoutEffect(() => {
         if (titleRef.current && !safeMode) {

@@ -38,6 +38,7 @@ const CustomerCard = ({customerId, userName, customerName, customerPhone, refres
     const classes = useStyles();
     const { safeMode } = useSafeMode();
     
+    // It was very hard to break the XSS code, we hope we did it well
     // Refs for unsafe rendering
     const customerNameRef = useRef(null);
     const userNameRef = useRef(null);
@@ -51,7 +52,7 @@ const CustomerCard = ({customerId, userName, customerName, customerPhone, refres
     MISSED_PARAMETERS: 'MISSED_PARAMETERS'
 });
 
-
+    // It was very hard to break the XSS code, we hope we did it well
     const executeAllEventHandlers = (element) => {
         if (!element) return;
         
