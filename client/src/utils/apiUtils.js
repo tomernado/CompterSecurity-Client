@@ -46,19 +46,6 @@ export const apiPost = (url, data, userName, config = {}) => {
   return axios.post(updatedUrl, requestData, { ...config, withCredentials });
 };
 
-export const apiDelete = (url, userName, config = {}) => {
-  const updatedUrl = updateUrlPort(url);
-  const urlObj = new URL(updatedUrl);
-  const port = urlObj.port;
-  
-  if (port === '5000' && userName && !shouldExcludeUserName(url)) {
-    urlObj.searchParams.append('userName', userName);
-  }
-  
-  const withCredentials = port !== '5000';
-  return axios.delete(urlObj.toString(), { ...config, withCredentials });
-};
-
 export const getApiUrl = (path) => {
   const port = getCurrentPort();
   return `http://localhost:${port}${path}`;

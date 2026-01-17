@@ -1,7 +1,5 @@
 import React, { useRef, useLayoutEffect } from 'react';
 import { makeStyles } from '@mui/styles';
-import DeleteIcon from '@mui/icons-material/Delete';
-import PersonIcon from '@mui/icons-material/Person';
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
@@ -11,7 +9,6 @@ import PhoneIcon from '@mui/icons-material/Phone';
 import BusinessIcon from '@mui/icons-material/Business';
 import BadgeIcon from '@mui/icons-material/Badge';
 import IconButton from '@mui/material/IconButton';
-import { apiDelete } from '../../utils/apiUtils';
 import { useSafeMode } from '../../contexts/SafeModeContext';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
@@ -124,32 +121,6 @@ const CustomerCard = ({customerId, userName, customerName, customerPhone, refres
         }
     }, [customerName, userName, customerPhone, customerId, safeMode]);
     
-const handleDeleteCustomer = () => {
-    apiDelete(`http://localhost:5000/customers/${customerId}`, userName)
-        .then((response) => {
-            if (response.data.returnCode === CUSTOMER_DELETE_CODE.DELETED) {
-                refreshCustomers();
-            }
-        })
-        .catch((error) => {
-            if (error.response && error.response.data) {
-                const { returnCode } = error.response.data;
-
-                switch (returnCode) {
-                    case CUSTOMER_DELETE_CODE.NOT_FOUND:
-                        alert('Error: Customer ID not found.');
-                        break;
-                    case CUSTOMER_DELETE_CODE.MISSED_PARAMETERS:
-                        alert('Error: Missing ID parameter.');
-                        break;
-                    default:
-                    alert('An unknown error occurred during deletion.');
-                    console.log(error.data)
-
-                }
-            }
-        });
-};
 
     return (
         <div className={classes.cardRoot}>
@@ -186,11 +157,6 @@ const handleDeleteCustomer = () => {
                             </div>
 
                         </div>
-                            <div>
-                                <IconButton onClick={handleDeleteCustomer}>
-                                    <DeleteIcon sx={{color: 'red'}}/>
-                                </IconButton>
-                            </div>
                     </div>
             
                 </AccordionDetails>
