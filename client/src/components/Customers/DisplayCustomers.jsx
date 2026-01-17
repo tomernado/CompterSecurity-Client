@@ -150,12 +150,12 @@ const handleSearch = (value) => {
             if (error.response.status === 404) {
                 displayCustomersFromList([]);
             } else if (error.response.status === 401) {
-                alert('Access denied. Please login again.');
+                console.error('Access denied. Please login again.');
             } else {
-                alert('Error searching customers.');
+                console.error('Error searching customers.');
             }
         } else {
-            alert('Network error. Please try again.');
+            console.error('Network error. Please try again.');
         }
     });
 }
